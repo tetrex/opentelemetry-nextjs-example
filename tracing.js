@@ -2,7 +2,7 @@
 
 const opentelemetry = require('@opentelemetry/sdk-node');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
-const { OTLPTraceExporter } = require('@opentelemetry/exporter-otlp-grpc');
+const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
 
 
 const { Resource } = require('@opentelemetry/resources');
@@ -14,7 +14,7 @@ const { startServer } = require('./server');
 // configure the SDK to export telemetry data to the console
 // enable all auto-instrumentations from the meta package
 const exporterOptions = {
-  url: 'http://localhost:4317',
+  url: 'http://localhost:4318/v1/traces',
  }
 const traceExporter = new OTLPTraceExporter(exporterOptions);
 const sdk = new opentelemetry.NodeSDK({
