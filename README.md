@@ -12,10 +12,9 @@ npm i
 To start the app and send the data to SigNoz
 
 ```
-npm run start:server
+npm run dev
 ```
-This will start the application on `http://localhost:8080`
+This will start the application on `http://localhost:3000`
 
-By default the app will send the data to SigNoz hosted on localhost. You can change the endpoint in line 17 of `tracing.js` file
 
 #### Hit the app a couple of times before actually seeing the tracing/logs on the SigNoz dashboard

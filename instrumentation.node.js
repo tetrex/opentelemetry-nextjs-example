@@ -1,36 +1,33 @@
+// tracing.js
 'use strict'
-
+const process = require('process');
 const opentelemetry = require('@opentelemetry/sdk-node');
 const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node');
 const { OTLPTraceExporter } = require('@opentelemetry/exporter-trace-otlp-http');
-
-
 const { Resource } = require('@opentelemetry/resources');
 const { SemanticResourceAttributes } = require('@opentelemetry/semantic-conventions');
 
-// custom nextjs server
-const { startServer } = require('./server');
+// // Add otel logging when debugging
+// const { diag, DiagConsoleLogger, DiagLogLevel } = require('@opentelemetry/api');
+// diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
 
-// configure the SDK to export telemetry data to the console
-// enable all auto-instrumentations from the meta package
 const exporterOptions = {
-  url: 'http://localhost:4318/v1/traces',
- }
+  url: 'https://ingest.[data-region].signoz.cloud:443/v1/traces', // use your own data region or use localhost:8080 for self-hosted
+  headers: { 'signoz-access-token': 'your-access-token' }, // Use if you are using SigNoz Cloud
+}
+
 const traceExporter = new OTLPTraceExporter(exporterOptions);
 const sdk = new opentelemetry.NodeSDK({
+  traceExporter,
+  instrumentations: [getNodeAutoInstrumentations()],
   resource: new Resource({
     [SemanticResourceAttributes.SERVICE_NAME]: 'SigNoz-Nextjs-Example'
-  }),
-  traceExporter,
-  instrumentations: [getNodeAutoInstrumentations()]
+  })
 });
 
 // initialize the SDK and register with the OpenTelemetry API
 // this enables the API to record telemetry
 sdk.start()
-  .then(() => console.log('Tracing initialized'))
-  .then(() => startServer())
-  .catch((error) => console.log('Error initializing tracing', error));
 
 // gracefully shut down the SDK on process exit
 process.on('SIGTERM', () => {
@@ -39,5 +36,3 @@ process.on('SIGTERM', () => {
     .catch((error) => console.log('Error terminating tracing', error))
     .finally(() => process.exit(0));
 });
-
-module.exports = sdk
