@@ -1,24 +1,24 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start:server": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@opentelemetry/api": "^1.6.0",
-    "@opentelemetry/auto-instrumentations-node": "^0.39.4",
-    "@opentelemetry/exporter-trace-otlp-http": "^0.45.0",
-    "@opentelemetry/sdk-node": "^0.45.0",
-    "next": "14.0.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "devDependencies": {
-    "eslint": "8.14.0",
-    "eslint-config-next": "12.1.5"
-  }
+	"name": "my-app",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@opentelemetry/api": "^1.6.0",
+		"@opentelemetry/auto-instrumentations-node": "^0.39.4",
+		"@opentelemetry/exporter-trace-otlp-http": "^0.45.0",
+		"@opentelemetry/sdk-node": "^0.45.0",
+		"next": "14.0.4",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"devDependencies": {
+		"eslint": "8.14.0",
+		"eslint-config-next": "12.1.5"
+	}
 }
